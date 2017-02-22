@@ -1,0 +1,183 @@
+
+<html>
+<head>
+<title>G30m0m0dash</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://static.codehs.com/gulp/0d18917950c6ced3626c58fda9d595c09ff9df6a/chs-js-lib/chs.js"></script>
+
+
+<style>
+canvas {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+}
+
+pre {
+    border: 1px solid black;
+    display: inline-block;
+    width: 400px;
+    height: 500px;
+    background-color: #F5F5F5;
+}
+</style>
+
+</head>
+
+<body>
+<h1>G30m0m0dash</h1>
+
+
+
+<canvas
+width="400"
+height="480"
+class="codehs-editor-canvas"></canvas>
+<script>
+window.onload = function() {
+
+    var shape1 = new Circle(20);
+shape1.setPosition(getWidth()/4,getHeight()/2);
+add(shape1);
+var shape2 = new Rectangle(40,40);
+shape2.setPosition(getWidth()/2-20,getHeight()/2-20);
+add(shape2);
+var shape3 = new Rectangle(50,50);
+shape3.setPosition(getWidth()*3/4-20,getHeight()/2-5);
+shape3.setRotation(45,0);
+add(shape3);
+var antiShape3 = new Rectangle(75,50);
+antiShape3.setPosition(getWidth()*3/4-30,getHeight()/2+20);
+antiShape3.setColor(Color.white);
+add(antiShape3);
+var geodude = new Circle(20);
+geodude.setPosition(getWidth()/8,getHeight()/2-20);
+var floor = new Line(0,getHeight()/2,getWidth()+200,getHeight()/2);
+var line1 = new Line(getWidth()/8-20,getHeight()/2-20,getWidth()/8+20,getHeight()/2-20);
+line1.setColor(Color.white);
+var line2 = new Line(getWidth()/8,getHeight()/2-40,getWidth()/8,getHeight()/2);
+line2.setColor(Color.white);
+var x = 0;
+var end = 0;
+var rect;
+var jumping = 0;
+var helpless = 0;
+function start(){
+    if(end == 0){
+        mouseDownMethod(setShapes);
+        mouseUpMethod(next);
+        keyDownMethod(jump);
+        keyUpMethod(jumpNot);
+    }
+}
+function setShapes(){
+    if (x == 0){
+        removeAll();
+        shape3 = new Circle(20);
+        shape2 = new Circle(20);
+        shape2.setPosition(getWidth()/2,getHeight()/2);
+        shape3.setPosition(getWidth()*3/4,getHeight()/2);
+        add(shape1);
+        add(shape2);
+        add(shape3);
+    }
+}
+function next(){
+    if (x == 0){
+        removeAll();
+        add(geodude);
+        add(floor);
+        setTimer(rotate,20);
+        setTimer(createRect,5000);
+        setTimer(collision,1);
+        add(line1);
+        add(line2);
+        x = 1;
+    }
+}
+function rotate(){
+    line1.rotate(3,0);
+    line2.rotate(3,0);
+    if (x==2){
+        rect.move(-2,0);
+    }
+    if (jumping == 1 && geodude.getY() > 80){
+        geodude.move(0,-1);
+        line1.move(0,-1);
+        line2.move(0,-1);
+    } else if (geodude.getY() < 220){
+        geodude.move(0,1);
+        line1.move(0,1);
+        line2.move(0,1);
+        jumping = 0;
+        helpless = 1;
+    } else {
+        helpless = 0;
+    }
+}
+function createRect(){
+    remove(rect);
+    x = 2;
+    var lol = Randomizer.nextInt(10,100);
+    rect = new Rectangle(lol,100-lol);
+    rect.setPosition(getWidth(),getHeight()/2-(100-lol));
+    add(rect);
+}
+function jump(e){
+    if(e.keyCode == Keyboard.UP && helpless == 0) {
+        jumping = 1;
+    }
+}
+function jumpNot(e){
+    if(e.keyCode == Keyboard.UP) {
+        jumping = 0;
+    }
+}
+function collision(){
+    remove(line1);
+    remove(line2);
+    remove(geodude);
+    var col = getElementAt(geodude.getX()-20,geodude.getY()-20);
+    if (col != null){
+        getDedYouShrub();
+    }
+        var col = getElementAt(geodude.getX()+20,geodude.getY()-20);
+    if (col != null){
+        getDedYouShrub();
+    }
+        var col = getElementAt(geodude.getX()-20,geodude.getY()+20);
+    if (col != null){
+        getDedYouShrub();
+    }
+        var col = getElementAt(geodude.getX()+20,geodude.getY()+20);
+    if (col != null){
+        getDedYouShrub();
+    }
+    if(end == 0){
+        add(geodude);
+        add(line1);
+        add(line2);
+    }
+}
+function getDedYouShrub(){
+    stopTimer(collision);
+    stopTimer(rotate);
+    stopTimer(createRect);
+    removeAll();
+    var dedTxt = new Text("You got ded the end","30pt Arial");
+    dedTxt.setPosition(20,getHeight()/2+25);
+    add(dedTxt);
+    end = 1;
+}
+
+
+    if (typeof start === 'function') {
+        start();
+    }
+};
+</script>
+
+</body>
+</html>
