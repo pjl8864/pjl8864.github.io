@@ -1,0 +1,182 @@
+<html>
+<head>
+<title>CLESH ROYEL</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://static.codehs.com/gulp/d3fb55959a69d8c9e5c638d688c08240f7182253/chs-js-lib/chs.js"></script>
+
+
+<style>
+canvas {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+}
+
+pre {
+    border: 1px solid black;
+    display: inline-block;
+    width: 400px;
+    height: 500px;
+    background-color: #F5F5F5;
+}
+</style>
+
+</head>
+
+<body>
+<h1>CLESH ROYEL</h1>
+
+
+
+<canvas
+width="400"
+height="500"
+class="codehs-editor-canvas"></canvas>
+
+<script>
+window.onload = function() {
+
+    var elixer = 0;
+var txt;
+var dude = [];
+var done = 0;
+var badDude = [];
+var rect2;
+var towers = [];
+var rekt = 0;
+var evilRekt = 0;
+function start(){
+    rect2 = new Rectangle(getWidth(),getHeight());
+    rect2.setColor(Color.green);
+    add(rect2);
+    getLined(0,getHeight()/2,getWidth(),getHeight()/2);
+    getLined(getWidth()/2,0,getWidth()/2,getHeight());
+    getLined(getWidth()/4,getHeight()-50,getWidth()*(3/4),getHeight()-50);
+    getLined(getWidth()/4,50,getWidth()*(3/4),50);
+    getLined(getWidth()/4,getHeight()-50,getWidth()/4,50);
+    getLined(getWidth()*(3/4),getHeight()-50,getWidth()*(3/4),50);
+    getRect(getWidth()/2-25,25);
+    getRect(getWidth()/2-25,getHeight()-75);
+    getRect(getWidth()/4-25,getHeight()-125);
+    getRect(getWidth()*(3/4)-25,getHeight()-125);
+    getRect(getWidth()/4-25,75);
+    getRect(getWidth()*(3/4)-25,75);
+    setTimer(movedude,20);
+    setTimer(elixerAdd,2000);
+    setTimer(badDudePlace,4000);
+    mouseClickMethod(place);
+}
+function getRect(x,y){
+    towers.push(new Rectangle(50,50));
+    towers.slice(-1)[0].setPosition(x,y);
+    add(towers.slice(-1)[0]);
+}
+function getLined(x1,y1,x2,y2){
+    var line = new Line(x1,y1,x2,y2);
+    add(line);
+}
+function movedude(){
+    if (done==1){
+        for(var i = 0; i < dude.length; i++){
+            dude[i].move(0,-1);
+            for(var x = 0; x < badDude.length; x++){
+                if(dude[i].getX() == badDude[x].getX() && dude[i].getY() == badDude[x].getY()){
+                    remove(badDude[x]);
+                    remove(dude[i]);
+                    badDude.remove(x);
+                    dude.remove(i);
+                }
+            }
+            for(var y = 0; y < towers.length; y++){
+                if(dude[i] != undefined && towers[y] != undefined){
+                    if(dude[i].getX() == (towers[y].getX()+25) && dude[i].getY() == (towers[y].getY()+50)){
+                        remove(dude[i]);
+                        remove(towers[y]);
+                        towers.remove[y];
+                        dude.remove[i];
+                        rekt += 1;
+                    }
+                }
+            }
+        }
+        for(var i = 0; i < badDude.length; i++){
+            badDude[i].move(0,1);
+            for(var x = 0; x < dude.length; x++){
+                if(badDude[i] != undefined){
+                    if(dude[x].getX() == badDude[i].getX() && dude[x].getY() == badDude[i].getY()){
+                        remove(badDude[i]);
+                        remove(dude[x]);
+                        badDude.splice(i,1);
+                        println(badDude[i]);
+                        dude.splice(x,1);
+                    }
+                }
+            }
+            for(var y = 0; y < towers.length; y++){
+                if(badDude[i] != undefined && towers[y] != undefined){
+                    if(badDude[i].getX() == (towers[y].getX()+25) && badDude[i].getY() == (towers[y].getY())){
+                        remove(badDude[i]);
+                        remove(towers[y]);
+                        towers.remove[y];
+                        badDude.remove[i];
+                        evilRekt += 1;
+                    }
+                }
+            }
+        }
+        if (rekt == 2){
+            removeAll();
+            println("You won");
+            evilRekt = 0;
+        }
+        if(evilRekt == 2){
+            removeAll();
+            println("You lost");
+        }
+    }
+}
+function place(e){
+    if(e.getY()<getHeight()/2 && elixer >= 2){
+        dude.push(new Circle(5));
+        println(dude[0]);
+        if(e.getX()<getWidth()/2){
+            dude.slice(-1)[0].setPosition(getWidth()/4,e.getY());
+        } else {
+            dude.slice(-1)[0].setPosition(getWidth()*(3/4),e.getY());
+        }
+        add(dude.slice(-1)[0]);
+        done = 1;
+        elixer -= 2;
+    }
+}
+function elixerAdd(){
+    elixer += 1;
+    remove(txt);
+    txt = new Text(elixer);
+    txt.setColor(Color.blue);
+    txt.setPosition(getWidth()/2-10,getHeight()-10);
+    add(txt);
+}
+function badDudePlace(){
+    var side = Randomizer.nextInt(1,2);
+        badDude.push(new Circle(5));
+        badDude.slice(-1)[0].setColor(Color.red);
+        if(side==1) { 
+            badDude.slice(-1)[0].setPosition(getWidth()/4,getHeight()/3);
+        } else {
+            badDude.slice(-1)[0].setPosition(getWidth()*(3/4),getHeight()/3);
+        }
+        add(badDude.slice(-1)[0]);
+}
+
+
+    if (typeof start === 'function') {
+        start();
+    }
+};
+</script>
+
+</body>
+</html>
