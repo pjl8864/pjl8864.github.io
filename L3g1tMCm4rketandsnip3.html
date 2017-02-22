@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>L3g1t MC m4rket and snip3</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://static.codehs.com/gulp/6ccf09a3eb29c42c864e9180cc3655fa933a3a20/chs-js-lib/chs.js"></script>
+
+
+<style>
+canvas {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+}
+
+pre {
+    border: 1px solid black;
+    display: inline-block;
+    width: 400px;
+    height: 500px;
+    background-color: #F5F5F5;
+}
+</style>
+
+</head>
+
+<body>
+<h1>L3g1t MC m4rket and snip3</h1>
+
+
+
+<canvas
+width="400"
+height="500"
+class="codehs-editor-canvas"></canvas>
+
+<script>
+window.onload = function() {
+
+    var names = ['OG', 'Zan', 'Parker', 'Rebound', 'Costed', 'Banana', 'Lol', 'GG', 'GGEZ', 'MC', 'Minecraft', 'Mojang', 'Notch', 'Jeb', 'ign', 'Dinnerbone'];
+var trashnames = ['xdd123', 'OG__', 'Zan_', 'Parker_', 'Reb0und', 'C0sted', '_Banana', 'Lololol', 'xXGGXx', '66EZ', 'M_C_', 'M1necaft', 'M0jan6', 'Not_ch', 'Je6_','xXignXx','Dinerbone'];
+var score = 0;
+var goodorbad;
+var scoretxt;
+function start(){
+    dothing();
+    mouseClickMethod(meme);
+}
+
+function meme(e){
+    remove(scoretxt);
+    var thing = getElementAt(e.getX(),e.getY());
+    if(thing != null){
+        stopTimer(next);
+        if(goodorbad==1){
+            score +=1;
+            removeAll();
+            dothing();
+        } else {
+            removeAll();
+            scoretxt = new Text("Score: " + score);
+            scoretxt.setPosition(getWidth()/2-50,getHeight()/2+50);
+            add(scoretxt);
+            var lose = new Text("You lost XDD","50pt Arial");
+            lose.setPosition(0,getHeight()/2);
+            add(lose);
+        }
+    }
+    add(scoretxt);
+}
+
+function dothing(){
+    scoretxt = new Text("Score: " + score);
+    scoretxt.setPosition(getWidth()/2-50,20);
+    add(scoretxt);
+    goodorbad = Randomizer.nextInt(1,2);
+    if(goodorbad == 1){
+        var rand = names[Math.floor(Math.random() * names.length)];
+        var numChars = rand.match(/[a-zA-Z]/g).length;
+        var txt = new Text(rand);
+        txt.setPosition(Randomizer.nextInt(100,getWidth()-100),Randomizer.nextInt(100,getHeight()-100));
+        add(txt);
+    } else {
+        var rand = trashnames[Math.floor(Math.random() * trashnames.length)];
+        var txt = new Text(rand);
+        txt.setPosition(Randomizer.nextInt(100,getWidth()-100),Randomizer.nextInt(100,getHeight()-100));
+        add(txt);
+    }
+    setTimer(next,1000);
+}
+function next(){
+    stopTimer(next);
+    if(goodorbad==2){
+        score +=1;
+        removeAll();
+        dothing();
+    } else {
+        removeAll();
+        var scoretxt = new Text("Score: " + score);
+        scoretxt.setPosition(getWidth()/2-50,getHeight()/2+50);
+        add(scoretxt);
+        var lose = new Text("You lost XDD","50pt Arial");
+        lose.setPosition(0,getHeight()/2);
+        add(lose);
+    }
+
+}
+
+
+    if (typeof start === 'function') {
+        start();
+    }
+};
+</script>
+
+</body>
+</html>
