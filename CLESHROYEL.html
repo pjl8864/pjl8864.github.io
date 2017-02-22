@@ -18,7 +18,7 @@ pre {
     border: 1px solid black;
     display: inline-block;
     width: 400px;
-    height: 500px;
+    height: 480px;
     background-color: #F5F5F5;
 }
 </style>
@@ -138,7 +138,7 @@ function movedude(){
     }
 }
 function place(e){
-    if(e.getY()<getHeight()/2 && elixer >= 2){
+    if(e.getY()>getHeight()/2 && elixer >= 2){
         dude.push(new Circle(5));
         println(dude[0]);
         if(e.getX()<getWidth()/2){
