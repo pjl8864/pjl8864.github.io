@@ -1,0 +1,54 @@
+
+<html>
+<head>
+<title>Random tinyurl</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://static.codehs.com/gulp/dfd2bf8d0ee51681e1ba8f74a059ab1b58962f3b/chs-js-lib/chs.js"></script>
+
+
+<style>
+canvas {
+    border: 1px solid black;
+    display: inline-block;
+    vertical-align: top;
+}
+
+pre {
+    border: 1px solid black;
+    display: inline-block;
+    width: 400px;
+    height: 500px;
+    background-color: #F5F5F5;
+}
+</style>
+
+</head>
+
+<body>
+<h1>Random tinyurl</h1>
+
+
+
+<canvas
+width="400"
+height="500"
+class="codehs-editor-canvas"></canvas>
+<pre id="console"></pre>
+
+<script>
+window.onload = function() {
+
+    var tinyurls = ["meww3ae","mbdlmw6","lhox7qx","n4e6n5k","kk6u9qg","jvg9cqe","asgsgra"];
+println("tinyurl.com/" + tinyurls[Randomizer.nextInt(0,tinyurls.length - 1)]);
+
+
+    if (typeof start === 'function') {
+        start();
+    }
+};
+</script>
+
+</body>
+</html>
